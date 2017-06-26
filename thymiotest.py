@@ -16,12 +16,26 @@ else:
 
 while True:
     for line in open("fo.txt"):
-        left = right  = int(line)
+        int deriction = int(line)
+        if line == 0:
+            left = right  = deriction
+        
+        if line > 0:
+            left = 0.5 * deriction
+            right = 2 * deriction
+            
+        if line < 0:
+            left = 2 * deriction
+            right = 0.5 * deriction
+        
+        if line = 1000:
+            left = right = deriction
+        
         motorspeed = {'left':left, 'right':right}
         # Create Aseba network
         controller = dbus.Interface(bus.get_object('ch.epfl.mobots.Aseba', '/'),
                                     dbus_interface='ch.epfl.mobots.AsebaNetwork')
         controller.SetVariable("thymio-II", "motor.left.target", [motorspeed['left']])
         controller.SetVariable("thymio-II", "motor.right.target", [motorspeed['right']])
-        print left
-    time.sleep(1)
+        print left, right
+    time.sleep(0.1)
