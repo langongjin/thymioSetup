@@ -42,7 +42,7 @@ void colorDetector(Mat imgF)
     //findContours(imgYellow,contoursYellow,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
 
     //time=2ms from here to the end
-    int jB = 0, jG = 0, jR = 0, jY = 0;
+    int jB = 0, jG = 0, jR = 0, jY = 0, maxBlueArea = 0, maxGreenArea = 0;
     Rect rectCoor[100], rectCoorBlue[10], rectCoorGreen[10]; //rectCoorRed[10],rectCoorYellow[10];
     for (int i = 0; i < contoursBlue.size(); i++)  //calculate the area, center of block and robot, boundaries/rectangles of block and robot
     {
@@ -51,6 +51,7 @@ void colorDetector(Mat imgF)
         if (imgBlueAreaBuf > 5){
             rectCoorBlue[jB] = boundingRect(contoursBlue[i]);
             rectCoor[jB] = rectCoorBlue[jB];
+            maxBlueArea = max(maxBlueArea, imgBlueAreaBuf);
             jB++;
         }
     }
@@ -62,6 +63,7 @@ void colorDetector(Mat imgF)
 
             rectCoorGreen[jG] = boundingRect(contoursGreen[i]);
             rectCoor[jB+jG] = rectCoorGreen[jG];
+            maxGreenArea = max(maxGreenArea, imgGreenAreaBuf);
             jG++;
         }
     }
@@ -262,7 +264,7 @@ void colorDetector(Mat imgF)
     for (int i = 0; i < robNum; i++)
     {
         int imgRows = img.rows, imgCols = img.cols;
-
+        
         //rectangle(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]),Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
 
         int robCenterCoorX = 2*(minRectCoorX[i] + maxRectCoorX[i]);
@@ -275,31 +277,42 @@ void colorDetector(Mat imgF)
         int leftLine = 0.4 * img.cols;
         int rightLine = 0.6 * img.cols;
         
+        int maxBoxArea = max(maxBlueArea, maxGreenArea);
+        int stopArea = 0.1 * imgRows * imgCols;
+        
         ofstream fo;
         fo.open("fo.txt", ios::trunc);
         
-        if (robCenterCoorX < leftLine)
+        if (maxBoxArea > stopArea)
         {
-            int distance = leftLine - robCenterCoorX;
-            //snprintf(textDistance, sizeof(textDistance),"L:%d",distance);
-            //putText(img, textDistance, Point(0.2*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+            int distance = 1000;
             fo << distance << endl;
-            cout << "Left : " << distance << endl;
         }
+        else
+        {
+            if (robCenterCoorX < leftLine)
+            {
+                int distance = leftLine - robCenterCoorX;
+                //snprintf(textDistance, sizeof(textDistance),"L:%d",distance);
+                //putText(img, textDistance, Point(0.2*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+                fo << distance << endl;
+                cout << "Left : " << distance << endl;
+            }
 
-        if (robCenterCoorX > rightLine)
-        {
-            int distance = rightLine - robCenterCoorX;
-            //snprintf(textDistance, sizeof(textDistance),"R:%d",distance);
-            //putText(img, textDistance, Point(0.8*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
-            fo << distance << endl;
-            cout << "Right : " << distance << endl;
-        }
-        if (robCenterCoorX >= leftLine && robCenterCoorX <= rightLine)
-        {
-            int distance = 0;
-            fo << distance << endl;
-            cout << "Go straight forward" << endl;    
+            if (robCenterCoorX > rightLine)
+            {
+                int distance = rightLine - robCenterCoorX;
+                //snprintf(textDistance, sizeof(textDistance),"R:%d",distance);
+                //putText(img, textDistance, Point(0.8*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+                fo << distance << endl;
+                cout << "Right : " << distance << endl;
+            }
+            if (robCenterCoorX >= leftLine && robCenterCoorX <= rightLine)
+            {
+                int distance = 0;
+                fo << distance << endl;
+                cout << "Go straight forward" << endl;    
+            }
         }
         
         fo.close();
