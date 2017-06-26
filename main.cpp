@@ -287,6 +287,7 @@ void colorDetector(Mat imgF)
         {
             int distance = 1000;
             fo << distance << endl;
+            cout << "Stop!" << endl;
         }
         else
         {
