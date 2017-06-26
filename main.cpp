@@ -46,7 +46,7 @@ void colorDetector(Mat imgF)
     Rect rectCoor[100], rectCoorBlue[10], rectCoorGreen[10]; //rectCoorRed[10],rectCoorYellow[10];
     for (int i = 0; i < contoursBlue.size(); i++)  //calculate the area, center of block and robot, boundaries/rectangles of block and robot
     {
-        double imgBlueAreaBuf = contourArea(contoursBlue[i]); //contours: the points of contours
+        int imgBlueAreaBuf = contourArea(contoursBlue[i]); //contours: the points of contours
 
         if (imgBlueAreaBuf > 5){
             rectCoorBlue[jB] = boundingRect(contoursBlue[i]);
@@ -58,7 +58,7 @@ void colorDetector(Mat imgF)
     //----------Green-----------
     for (int i = 0; i < contoursGreen.size(); i++)  //calculate the area, center of block and robot, boundaries/rectangles of block and robot
     {
-        double imgGreenAreaBuf = contourArea(contoursGreen[i]); //contours: the points of contours
+        int imgGreenAreaBuf = contourArea(contoursGreen[i]); //contours: the points of contours
         if (imgGreenAreaBuf > 5){
 
             rectCoorGreen[jG] = boundingRect(contoursGreen[i]);
@@ -277,7 +277,7 @@ void colorDetector(Mat imgF)
         int leftLine = 0.4 * img.cols;
         int rightLine = 0.6 * img.cols;
         
-        int maxBoxArea = max(maxBlueArea, maxGreenArea);
+        int maxBoxArea = 16 * max(maxBlueArea, maxGreenArea);
         int stopArea = 0.1 * imgRows * imgCols;
         
         ofstream fo;
