@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -262,37 +263,51 @@ void colorDetector(Mat imgF)
     {
         int imgRows = img.rows, imgCols = img.cols;
 
-        rectangle(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]),Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
+        //rectangle(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]),Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
 
         int robCenterCoorX = 2*(minRectCoorX[i] + maxRectCoorX[i]);
         int robCenterCoorY = 2*(minRectCoorY[i] + maxRectCoorY[i]);
-        circle(img,Point(robCenterCoorX,robCenterCoorY),3,Scalar(0,255,0),4);
-        char textRobCenterCoor[64], textDistance[64];
-        snprintf(textRobCenterCoor, sizeof(textRobCenterCoor),"(%d,%d)",robCenterCoorX,robCenterCoorY);
-        putText(img, textRobCenterCoor, Point(robCenterCoorX + 10,robCenterCoorY+3),FONT_HERSHEY_DUPLEX,0.4,Scalar(0,255,0),1);
+        //circle(img,Point(robCenterCoorX,robCenterCoorY),3,Scalar(0,255,0),4);
+        //char textRobCenterCoor[64], textDistance[64];
+        //snprintf(textRobCenterCoor, sizeof(textRobCenterCoor),"(%d,%d)",robCenterCoorX,robCenterCoorY);
+        //putText(img, textRobCenterCoor, Point(robCenterCoorX + 10,robCenterCoorY+3),FONT_HERSHEY_DUPLEX,0.4,Scalar(0,255,0),1);
 
         int leftLine = 0.4 * img.cols;
         int rightLine = 0.6 * img.cols;
+        
+        ofstream fo;
+        fo.open("fo.txt", ios::trunc);
+        
         if (robCenterCoorX < leftLine)
         {
             int distance = leftLine - robCenterCoorX;
-            snprintf(textDistance, sizeof(textDistance),"L:%d",distance);
-            putText(img, textDistance, Point(0.2*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+            //snprintf(textDistance, sizeof(textDistance),"L:%d",distance);
+            //putText(img, textDistance, Point(0.2*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+            fo << distance << endl;
             cout << "Left : " << distance << endl;
         }
 
         if (robCenterCoorX > rightLine)
         {
-            int distance = robCenterCoorX - rightLine;
-            snprintf(textDistance, sizeof(textDistance),"R:%d",distance);
-            putText(img, textDistance, Point(0.8*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+            int distance = rightLine - robCenterCoorX;
+            //snprintf(textDistance, sizeof(textDistance),"R:%d",distance);
+            //putText(img, textDistance, Point(0.8*img.cols,15),FONT_HERSHEY_DUPLEX,0.5,Scalar(0,255,0),1);
+            fo << distance << endl;
             cout << "Right : " << distance << endl;
         }
+        if (robCenterCoorX >= leftLine && robCenterCoorX <= rightLine)
+        {
+            int distance = 0;
+            fo << distance << endl;
+            cout << "Go straight forward" << endl;    
+        }
+        
+        fo.close();
 
-        line(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]), Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
-        line(img, Point(4*minRectCoorX[i],4*maxRectCoorY[i]), Point(4*maxRectCoorX[i],4*minRectCoorY[i]),Scalar(0,255,0),1);
-        line(img, Point(leftLine,0), Point(leftLine,img.rows), Scalar(0,255,0),1);
-        line(img, Point(rightLine,0), Point(rightLine,img.rows), Scalar(0,255,0),1);
+        //line(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]), Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
+        //line(img, Point(4*minRectCoorX[i],4*maxRectCoorY[i]), Point(4*maxRectCoorX[i],4*minRectCoorY[i]),Scalar(0,255,0),1);
+        //line(img, Point(leftLine,0), Point(leftLine,img.rows), Scalar(0,255,0),1);
+        //line(img, Point(rightLine,0), Point(rightLine,img.rows), Scalar(0,255,0),1);
 
     }
     //imshow("image", img);
