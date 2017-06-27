@@ -16,7 +16,7 @@ else:
 
 while True:
     for line in open("fo.txt"):
-        int deriction = int(line)
+        ideriction = int(line)
         if deriction == 0:
             left = right  = 100
         
@@ -30,6 +30,10 @@ while True:
         
         if deriction = 1000:
             left = right = 0
+        
+        if deriction = 2000:
+            left = 0
+            right = 100
         
         motorspeed = {'left':left, 'right':right}
         # Create Aseba network
