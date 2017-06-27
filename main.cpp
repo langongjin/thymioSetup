@@ -323,6 +323,7 @@ void colorDetector(Mat imgF)
             ofstream fo;
             fo.open("fo.txt", ios::trunc);
             fo << 2000 << endl;
+            cout << "NO target! Searching" << endl;
             fo.close();
         }
 
