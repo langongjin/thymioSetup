@@ -318,6 +318,13 @@ void colorDetector(Mat imgF)
             }
             fo.close();
         }
+        else
+        {
+            ofstream fo;
+            fo.open("fo.txt", ios::trunc);
+            fo << 2000 << endl;
+            fo.close();
+        }
 
         //line(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]), Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
         //line(img, Point(4*minRectCoorX[i],4*maxRectCoorY[i]), Point(4*maxRectCoorX[i],4*minRectCoorY[i]),Scalar(0,255,0),1);
