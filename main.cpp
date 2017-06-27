@@ -274,23 +274,26 @@ void colorDetector(Mat imgF)
         //snprintf(textRobCenterCoor, sizeof(textRobCenterCoor),"(%d,%d)",robCenterCoorX,robCenterCoorY);
         //putText(img, textRobCenterCoor, Point(robCenterCoorX + 10,robCenterCoorY+3),FONT_HERSHEY_DUPLEX,0.4,Scalar(0,255,0),1);
 
-        int leftLine = 0.4 * img.cols;
-        int rightLine = 0.6 * img.cols;
+        int leftLine = 0.4 * imgCols;
+        int rightLine = 0.6 * imgCols;
         
         int maxBoxArea = 16 * max(maxBlueArea, maxGreenArea);
-        int stopArea = 0.1 * imgRows * imgCols;
+        int stopArea = 0.12 * imgRows * imgCols;
         
-        ofstream fo;
-        fo.open("fo.txt", ios::trunc);
+
         
         if (maxBoxArea > stopArea)
         {
+            ofstream fo;
+            fo.open("fo.txt", ios::trunc);
             int distance = 1000;
             fo << distance << endl;
             cout << "Stop!" << endl;
         }
         else
         {
+            ofstream fo;
+            fo.open("fo.txt", ios::trunc);
             if (robCenterCoorX < leftLine)
             {
                 int distance = leftLine - robCenterCoorX;
