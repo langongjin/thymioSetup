@@ -268,7 +268,7 @@ void colorDetector(Mat imgF)
         //rectangle(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]),Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
 
         int robCenterCoorX = 2*(minRectCoorX[i] + maxRectCoorX[i]);
-        int robCenterCoorY = 2*(minRectCoorY[i] + maxRectCoorY[i]);
+        //int robCenterCoorY = 2*(minRectCoorY[i] + maxRectCoorY[i]);
         //circle(img,Point(robCenterCoorX,robCenterCoorY),3,Scalar(0,255,0),4);
         //char textRobCenterCoor[64], textDistance[64];
         //snprintf(textRobCenterCoor, sizeof(textRobCenterCoor),"(%d,%d)",robCenterCoorX,robCenterCoorY);
@@ -279,9 +279,7 @@ void colorDetector(Mat imgF)
         
         int maxBoxArea = 16 * max(maxBlueArea, maxGreenArea);
         int stopArea = 0.12 * imgRows * imgCols;
-        
 
-        
         if (maxBoxArea > stopArea)
         {
             ofstream fo;
