@@ -17,19 +17,19 @@ else:
 while True:
     for line in open("fo.txt"):
         int deriction = int(line)
-        if line == 0:
-            left = right  = deriction
+        if deriction == 0:
+            left = right  = 100
         
-        if line > 0:
-            left = 0.5 * deriction
-            right = 2 * deriction
+        if deriction > 0:
+            left = 25 + 0.2 * deriction
+            right = 50 + 0.4 * deriction
             
-        if line < 0:
-            left = 2 * deriction
-            right = 0.5 * deriction
+        if deriction < 0:
+            left = 50 - 0.4 * deriction
+            right = 25 - 0.2 * deriction
         
-        if line = 1000:
-            left = right = deriction
+        if deriction = 1000:
+            left = right = 0
         
         motorspeed = {'left':left, 'right':right}
         # Create Aseba network
