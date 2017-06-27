@@ -289,8 +289,9 @@ void colorDetector(Mat imgF)
             int distance = 1000;
             fo << distance << endl;
             cout << "Stop!" << endl;
+            fo.close();
         }
-        else
+        else if (maxBoxArea > 100)
         {
             ofstream fo;
             fo.open("fo.txt", ios::trunc);
@@ -317,9 +318,8 @@ void colorDetector(Mat imgF)
                 fo << distance << endl;
                 cout << "Go straight forward" << endl;    
             }
+            fo.close();
         }
-        
-        fo.close();
 
         //line(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]), Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
         //line(img, Point(4*minRectCoorX[i],4*maxRectCoorY[i]), Point(4*maxRectCoorX[i],4*minRectCoorY[i]),Scalar(0,255,0),1);
