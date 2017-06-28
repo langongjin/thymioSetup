@@ -44,7 +44,7 @@ while True:
             controller.SetVariable("thymio-II", "motor.left.target", [motorspeed['left']])
             controller.SetVariable("thymio-II", "motor.right.target", [motorspeed['right']])
             print left, right
-    else
+    else:
         print "command is NULL"
 
     time.sleep(0.1)
