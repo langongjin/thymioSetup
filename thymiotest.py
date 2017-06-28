@@ -16,26 +16,26 @@ else:
     bus = dbus.SessionBus()
 
 while True:
-    if os.path.getsize("fo.txt"):
+    if os.path.getsize("fo.txt") > 1L:
         for line in open("fo.txt"):
-            ideriction = int(line)
+            deriction = int(line)
             if deriction == 0:
-                left = right  = 100
+                left = right  = 120
 
             if deriction > 0:
-                left = 25 + 0.2 * deriction
-                right = 50 + 0.4 * deriction
+                left = 30 + 0.2 * deriction
+                right = 60 + 0.4 * deriction
 
             if deriction < 0:
-                left = 50 - 0.4 * deriction
-                right = 25 - 0.2 * deriction
+                left = 60 - 0.4 * deriction
+                right = 30 - 0.2 * deriction
 
-            if deriction = 1000:
+            if deriction == 1000:
                 left = right = 0
 
-            if deriction = 2000:
-                left = 0
-                right = 100
+            if deriction == 2000:
+                left = -1
+                right = 150
 
             motorspeed = {'left':left, 'right':right}
             # Create Aseba network
