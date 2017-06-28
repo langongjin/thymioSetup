@@ -16,8 +16,10 @@ else:
     bus = dbus.SessionBus()
 
 while True:
-    if os.path.getsize("fo.txt") > 1L:
-        for line in open("fo.txt"):
+    for line in open("fo.txt"):
+        if line.strip() == '':
+            print "command is NULL"
+        else:
             deriction = int(line)
             if deriction == 0:
                 left = right  = 120
@@ -35,16 +37,14 @@ while True:
 
             if deriction == 2000:
                 left = -1
-                right = 150
+                right = 150    
 
-            motorspeed = {'left':left, 'right':right}
-            # Create Aseba network
-            controller = dbus.Interface(bus.get_object('ch.epfl.mobots.Aseba', '/'),
-                                        dbus_interface='ch.epfl.mobots.AsebaNetwork')
-            controller.SetVariable("thymio-II", "motor.left.target", [motorspeed['left']])
-            controller.SetVariable("thymio-II", "motor.right.target", [motorspeed['right']])
-            print left, right
-    else:
-        print "command is NULL"
+        motorspeed = {'left':left, 'right':right}
+        # Create Aseba network
+        controller = dbus.Interface(bus.get_object('ch.epfl.mobots.Aseba', '/'),
+                                    dbus_interface='ch.epfl.mobots.AsebaNetwork')
+        controller.SetVariable("thymio-II", "motor.left.target", [motorspeed['left']])
+        controller.SetVariable("thymio-II", "motor.right.target", [motorspeed['right']])
+        print left, right
 
     time.sleep(0.1)
