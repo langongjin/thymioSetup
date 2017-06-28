@@ -260,11 +260,20 @@ void colorDetector(Mat imgF)
             }
         }
     }
-
+    
+    if (robNum == 0)
+    {
+        ofstream fo;
+        fo.open("fo.txt", ios::trunc);
+        fo << 2000 << endl;
+        cout << "NO target! Searching" << endl;
+        fo.close();
+    }
+    
     for (int i = 0; i < robNum; i++)
     {
         int imgRows = img.rows, imgCols = img.cols;
-        
+        cout << "robNum = " << robNum << endl;
         //rectangle(img, Point(4*minRectCoorX[i],4*minRectCoorY[i]),Point(4*maxRectCoorX[i],4*maxRectCoorY[i]),Scalar(0,255,0),1);
 
         int robCenterCoorX = 2*(minRectCoorX[i] + maxRectCoorX[i]);
@@ -316,14 +325,6 @@ void colorDetector(Mat imgF)
                 fo << distance << endl;
                 cout << "Go straight forward" << endl;    
             }
-            fo.close();
-        }
-        else
-        {
-            ofstream fo;
-            fo.open("fo.txt", ios::trunc);
-            fo << 2000 << endl;
-            cout << "NO target! Searching" << endl;
             fo.close();
         }
 
